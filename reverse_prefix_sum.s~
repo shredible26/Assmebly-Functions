@@ -1,0 +1,45 @@
+$LFB0 = .
+reverse_prefix_sum:
+        addiu   $sp,$sp,-40
+        sw      $31,36($sp)
+        sw      $fp,32($sp)
+        move    $fp,$sp
+        sw      $4,40($fp)
+        lw      $2,40($fp)
+        nop
+        lw      $3,0($2)
+        li      $2,-1                 # 0xffffffffffffffff
+        bne     $3,$2,$L2
+        nop
+
+        move    $2,$0
+        b       $L3
+        nop
+
+$L2:
+        lw      $2,40($fp)
+        nop
+        addiu   $2,$2,4
+        move    $4,$2
+        jal     reverse_prefix_sum
+        nop
+
+        move    $3,$2
+        lw      $2,40($fp)
+        nop
+        lw      $2,0($2)
+        nop
+        addu    $2,$3,$2
+        sw      $2,24($fp)
+        lw      $2,40($fp)
+        lw      $3,24($fp)
+        nop
+        sw      $3,0($2)
+        lw      $2,24($fp)
+$L3:
+        move    $sp,$fp
+        lw      $31,36($sp)
+        lw      $fp,32($sp)
+        addiu   $sp,$sp,40
+        j       $31
+        nop
